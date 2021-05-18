@@ -1,0 +1,101 @@
+﻿@model voting.Models.User
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+</head>
+
+<body class="LogRegBody">
+    <div style="width: auto; text-align: center; margin-left: 0%; margin-bottom:20px; margin-top:90px;">
+        <h2><b>User Registration Form</b></h2>
+    </div>
+    <br>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+<div class="form-horizontal" style="text-align:center; width:100%; margin-right:20%">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <table style="width: 600px; margin-left:30%; height:200px; text-align:left">
+
+        <tr>
+            <td class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
+                <section class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </section>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="form-group" style="white-space: nowrap; overflow: hidden;">
+                @Html.LabelFor(model => model.AadharNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+            </td>
+            <td>
+                <section class="col-md-10">
+                    @Html.EditorFor(model => model.AadharNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AadharNumber, "", new { @class = "text-danger" })
+                </section>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
+                <section class="col-md-10">
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </section>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
+                <section class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </section>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="form-group" style="white-space: nowrap; overflow: hidden;">
+                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td >
+                <section class="col-md-10">
+                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </section>
+            </td>
+        </tr>
+
+    </table>
+
+    <section class="form-group" style="margin-top:30px;">
+        <input type="submit" value="Register" class="btn btn-primary" />
+    </section>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <label class="label-success">@ViewBag.SuccessMessage</label>
+        </div>
+    </div>
+</div>
+    }
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

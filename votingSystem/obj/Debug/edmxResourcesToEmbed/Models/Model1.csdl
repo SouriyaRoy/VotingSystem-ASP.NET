@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PollingSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Candidate">
+    <Key>
+      <PropertyRef Name="CandidateId" />
+    </Key>
+    <Property Name="CandidateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PollId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Options" Relationship="Self.CandidateId_Ref_Candidate" FromRole="Candidate" ToRole="Option" />
+    <NavigationProperty Name="Poll" Relationship="Self.PollId_Ref_Poll" FromRole="Candidate" ToRole="Poll" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="OptionId" />
+    </Key>
+    <Property Name="OptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PollId" Type="Int32" Nullable="false" />
+    <Property Name="CandidateId" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Candidate" Relationship="Self.CandidateId_Ref_Candidate" FromRole="Option" ToRole="Candidate" />
+    <NavigationProperty Name="Poll" Relationship="Self.PollId_Ref_Poll_Option" FromRole="Option" ToRole="Poll" />
+  </EntityType>
+  <EntityType Name="Poll">
+    <Key>
+      <PropertyRef Name="PollId" />
+    </Key>
+    <Property Name="PollId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PollStatus" Type="Boolean" Nullable="false" />
+    <Property Name="PollName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Result" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Candidates" Relationship="Self.PollId_Ref_Poll" FromRole="Poll" ToRole="Candidate" />
+    <NavigationProperty Name="Options" Relationship="Self.PollId_Ref_Poll_Option" FromRole="Poll" ToRole="Option" />
+    <NavigationProperty Name="UserHistories" Relationship="Self.Test" FromRole="Poll" ToRole="UserHistory" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="AadharNumber" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="UserType" Type="Byte" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="UserHistories" Relationship="Self.Test1" FromRole="User" ToRole="UserHistory" />
+  </EntityType>
+  <EntityType Name="UserHistory">
+    <Key>
+      <PropertyRef Name="UserHistoryId" />
+    </Key>
+    <Property Name="UserHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="PollId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Poll" Relationship="Self.Test" FromRole="UserHistory" ToRole="Poll" />
+    <NavigationProperty Name="User" Relationship="Self.Test1" FromRole="UserHistory" ToRole="User" />
+  </EntityType>
+  <Association Name="CandidateId_Ref_Candidate">
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="1" />
+    <End Role="Option" Type="Self.Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Candidate">
+        <PropertyRef Name="CandidateId" />
+      </Principal>
+      <Dependent Role="Option">
+        <PropertyRef Name="CandidateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PollId_Ref_Poll">
+    <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Poll">
+        <PropertyRef Name="PollId" />
+      </Principal>
+      <Dependent Role="Candidate">
+        <PropertyRef Name="PollId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PollId_Ref_Poll_Option">
+    <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+    <End Role="Option" Type="Self.Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Poll">
+        <PropertyRef Name="PollId" />
+      </Principal>
+      <Dependent Role="Option">
+        <PropertyRef Name="PollId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Test">
+    <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+    <End Role="UserHistory" Type="Self.UserHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Poll">
+        <PropertyRef Name="PollId" />
+      </Principal>
+      <Dependent Role="UserHistory">
+        <PropertyRef Name="PollId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Test1">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserHistory" Type="Self.UserHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserHistory">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PollingSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Candidates" EntityType="Self.Candidate" />
+    <EntitySet Name="Options" EntityType="Self.Option" />
+    <EntitySet Name="Polls" EntityType="Self.Poll" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserHistories" EntityType="Self.UserHistory" />
+    <AssociationSet Name="CandidateId_Ref_Candidate" Association="Self.CandidateId_Ref_Candidate">
+      <End Role="Candidate" EntitySet="Candidates" />
+      <End Role="Option" EntitySet="Options" />
+    </AssociationSet>
+    <AssociationSet Name="PollId_Ref_Poll" Association="Self.PollId_Ref_Poll">
+      <End Role="Poll" EntitySet="Polls" />
+      <End Role="Candidate" EntitySet="Candidates" />
+    </AssociationSet>
+    <AssociationSet Name="PollId_Ref_Poll_Option" Association="Self.PollId_Ref_Poll_Option">
+      <End Role="Poll" EntitySet="Polls" />
+      <End Role="Option" EntitySet="Options" />
+    </AssociationSet>
+    <AssociationSet Name="Test" Association="Self.Test">
+      <End Role="Poll" EntitySet="Polls" />
+      <End Role="UserHistory" EntitySet="UserHistories" />
+    </AssociationSet>
+    <AssociationSet Name="Test1" Association="Self.Test1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserHistory" EntitySet="UserHistories" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

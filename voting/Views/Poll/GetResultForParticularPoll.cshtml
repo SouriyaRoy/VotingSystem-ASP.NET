@@ -1,0 +1,166 @@
+﻿@model voting.ViewModels.PollResultViewModel
+@using voting.Models;
+@using Newtonsoft.Json;
+@{
+    ViewBag.Title = "GetResultForParticularPoll";
+    List<PieData> pieDatas;
+    int voteCount = 0, candidateId = 0, winnerVotes = 0;
+    float winnerPercentage = 0.0f;
+    string winnerName = string.Empty;
+
+}
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+    @{ 
+        voteCount = 0;
+        for (int i = 0; i < Model.Option.ToList().Count; i++)
+        {
+            voteCount += Model.Option.ToList().ElementAt(i).Count;
+        }
+    }
+</head>
+<div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("Home", "AdminHome", "Start", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Polls", "Index", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Candidates", "Index", "Candidate", new { area = "" }, new { @class = "navbar-brand" })
+
+
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav" style="list-style:none">
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="padding:10px; background-color:crimson; color:white; text-align:center; margin-top:20px; margin-bottom: 20px;">
+    <h3 style=""><b>Result for Poll - @Model.poll.PollName</b></h3>
+</div>
+
+@if (voteCount == 0)
+{
+    <h2>Not Count for this Poll!!</h2>
+}
+else
+{
+    <table style="">
+
+        <tr>
+            <th style="width:50%; text-align:center; font-size:x-large; color:transparent">{Spacer}</th>
+            <th style="width:50%; "></th>
+        </tr>
+
+        <tr>
+
+            <td style=" padding-left:2%">
+
+                <table class="table table-bordered table-hover" style="font-size:medium; font-weight:400; vertical-align:middle;">
+                    <tr>
+                        <td style="background-color:#337ab7; color:white; width:75%;">Total Votes Cast :</td>
+
+                        <td style="background-color: white; width: 25%; text-align: center">@voteCount</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#337ab7; color:white;">Winner Name :</td>
+                        @{
+                            winnerName = string.Empty;
+                            candidateId = 0;
+                            winnerVotes = 0;
+                            for (int i = 0; i < Model.Option.ToList().Count(); i++)
+                            {
+                                if (Model.Option.ToList().ElementAt(i).Count > winnerVotes)
+                                {
+                                    candidateId = Model.Option.ToList().ElementAt(i).CandidateId;
+                                    winnerVotes = Model.Option.ToList().ElementAt(i).Count;
+                                }
+                            }
+                            winnerName = Model.Candidates.ToList().Where(o => o.CandidateId == candidateId).FirstOrDefault().Name;
+                        }
+                        <td style="background-color: white; text-align: center">@winnerName</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#337ab7; color:white;">Winner Votes :</td>
+                        <td style="background-color: white; text-align:center">@winnerVotes</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#337ab7; color:white; width:50%;">Percentage of Winner Votes :</td>
+                        @{winnerPercentage = ((float)winnerVotes / voteCount) * 100; }
+                        <td style="background-color: white; text-align: center">@winnerPercentage %</td>
+                    </tr>
+                </table>
+
+            </td>
+
+            <td style="text-align:center;  padding-left:2%">
+                <center>
+                    @{
+                        pieDatas = new List<PieData>();
+
+                        for (int idx = 0; idx < Model.Option.ToList().Count; ++idx)
+                        {
+                            pieDatas.Add(new PieData() { Candidate = Model.Candidates.ToList().ElementAt(idx).Name, Vote = Model.Option.ToList().ElementAt(idx).Count });
+                        }
+                        var json = JsonConvert.SerializeObject(pieDatas);
+                    }
+                    <p id="jsonData" hidden>@json</p>
+
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        // Load the Visualization API and the piechart package.
+                        google.charts.load('current', { 'packages': ['corechart'] });
+
+                        // Set a callback to run when the Google Visualization API is loaded.
+                        google.charts.setOnLoadCallback(drawChart);
+                        // Callback that creates and populates a data table,
+                        // instantiates the pie chart, passes in the data and
+                        // draws it.
+                        var json = document.getElementById("jsonData").innerText;
+                        var arrFromJson = JSON.parse(json);
+                        function drawChart() {
+                            // Create the data table.
+
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Month');
+                            data.addColumn('number', 'Count');
+
+                            for (var i = 0; i < arrFromJson.length; i++) {
+                                data.addRow([arrFromJson[i].Candidate, arrFromJson[i].Vote]);
+                            }
+
+                            // Set chart options
+                            var options = {
+                                'title': 'Results Pie Chart',
+                                'width': 400,
+                                'height': 300,
+                                is3D: true
+                            };
+
+                            // Instantiate and draw our chart, passing in some options.
+                            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                            chart.draw(data, options);
+                        }
+
+                    </script>
+
+                    <form id="form1" runat="server">
+                        <div id="chart_div" style="width: 600px; height: 350px;">
+                        </div>
+                    </form>
+                </center>
+            </td>
+        </tr>
+
+
+    </table>
+}
+
+
+
+
+<div style="margin-top:10px; width: auto; text-align: center;">
+    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-primary", @style = "width:100px;" })
+</div>
+

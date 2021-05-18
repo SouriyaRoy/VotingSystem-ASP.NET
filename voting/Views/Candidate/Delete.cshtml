@@ -1,0 +1,78 @@
+﻿@model voting.Models.Candidate
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+</head>
+<div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("Home", "AdminHome", "Start", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Polls", "Index", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Candidates", "Index", "Candidate", new { area = "" }, new { @class = "navbar-brand" })
+           
+
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav" style="list-style:none">
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="container-fluid" style="padding:10px; background-color:crimson; color: white; text-align:center; margin-top:20px; margin-bottom: 20px;">
+        <h4>Delete Candidate</h4>
+    </div>
+    <br>
+    <div>
+        <dl class="dl-horizontal">
+            <dt style="width: auto; text-align: center; margin-left:37%;">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd style="width: auto; margin-left: 52%;">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt style="width: auto; text-align: center; margin-left: 37%;">
+                @Html.DisplayNameFor(model => model.DOB)
+            </dt>
+
+            <dd style="width: auto; margin-left: 52%;">
+                @Html.DisplayFor(model => model.DOB)
+            </dd>
+
+            <dt style="width: auto; text-align: center; margin-left: 37%;">
+                @Html.DisplayNameFor(model => model.Poll.PollName)
+            </dt>
+
+            <dd style="width: auto; margin-left: 52%;">
+                @Html.DisplayFor(model => model.Poll.PollName)
+            </dd>
+
+        </dl>
+    </div>
+
+    <h4 style="margin-top: 40px; width: auto;text-align: center; font-size:x-large; color:red;"><b>Are you sure you want to delete this Candidate?</b></h4>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-actions no-color" style="margin-top:30px;">
+                <div style="width: auto; text-align: center; margin: auto;">
+                    <input type="submit" value="Delete" class="btn btn-primary" style="width:100px;" />
+                </div>
+            </div>
+    }
+    <div style="width: auto; text-align: center; margin-top:10px;">
+        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+    </div>
+
+</div>

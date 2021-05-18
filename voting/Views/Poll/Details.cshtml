@@ -1,0 +1,69 @@
+﻿@model voting.Models.Poll
+
+@{
+    ViewBag.Title = "GetDetails";
+}
+
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+    
+</head>
+<div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("Home", "AdminHome", "Start", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Polls", "Index", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Candidates", "Index", "Candidate", new { area = "" }, new { @class = "navbar-brand" })
+           
+
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav" style="list-style:none">
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="container-fluid" style="padding:10px; background-color:crimson; color:white; text-align:center; margin-top:20px; margin-bottom: 20px;">
+        <h4>Polls Details</h4>
+    </div>
+    <div>
+        <dl class="dl-horizontal">
+            <dt style="width: auto; text-align: center; margin-left: 43%;">
+                @Html.DisplayNameFor(model => model.PollName)
+            </dt>
+
+            <dd style="width: auto; margin-left: 52%;">
+                @Html.DisplayFor(model => model.PollName)
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt style="width: auto; text-align: center; margin-left: 43%;">
+                @Html.DisplayNameFor(model => model.PollId)
+            </dt>
+
+            <dd style="width: auto; margin-left: 52%;">
+                @Html.DisplayFor(model => model.PollId)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div style="margin-top: 50px; text-align: center;margin: auto; width:50%">
+    <br>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PollId }, new { @class = "btn btn-primary", @style = "width:100px; margin-right:20px" })
+    
+    @Html.ActionLink("Delete", "Delete", new { id = Model.PollId }, new { @class = "btn btn-primary", @style = "width:100px;" })
+    <br>
+    @Html.ActionLink("Close/Reopen", "ClosePoll", new { id = Model.PollId }, new { @class = "btn btn-primary", @style = "width:100px; margin-top:20px" })
+    <br>
+    @*<input type="button"
+        value="Go Somewhere Else"
+        onclick="location.href='<%: Url.ActionLink("ClosePoll", "Poll" ) %>'" />*@
+</div>
+
+<div style="margin-top:10px; width: auto; text-align: center;">
+    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default", @style = "width:100px;" })
+</div>

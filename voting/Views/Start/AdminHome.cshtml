@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "AdminHome";
+}
+
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+    <style>
+        {
+            border: 1px solid;
+            padding: 10px;
+            box-shadow: 5px 10px 8px 10px #888888;
+        }
+    </style>
+</head>
+<div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("Home", "AdminHome", "Start", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Polls", "Index", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Candidates", "Index", "Candidate", new { area = "" }, new { @class = "navbar-brand" })
+      
+
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav" style="list-style:none">
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<body>
+<div style="background-color:crimson;color:white;padding:20px; text-align:center; margin-top:20%;">
+    <h2 style="font-weight:700; font-size:xx-large">Welcome Admin!!</h2>
+</div>
+</body>
+
+

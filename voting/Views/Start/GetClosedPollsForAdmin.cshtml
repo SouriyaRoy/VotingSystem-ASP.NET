@@ -1,0 +1,146 @@
+﻿@model IEnumerable<votingSystem.ViewModels.PollResultViewModel>
+
+@{
+    ViewBag.Title = "GetClosedPollsForAdmin";
+    int voteCount = 0;
+    List<int> votes;
+    int candidateId = 0;
+    int winnerVotes = 0;
+    string winnerName = string.Empty;
+}
+
+<h2>Closed Poll</h2>
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+    </style>
+
+    <title>Pie Chart using Google api</title>
+
+</head>
+
+<div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("Home", "AdminHome", "Start", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Polls", "Index", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Candidates", "Index", "Candidate", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Results", "Result", "Start", new { area = "" }, new { @class = "navbar-brand" })
+
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav" style="list-style:none">
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<h3 style="text-align:center">Poll Results</h3>
+
+@foreach (var item in Model)
+{
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="margin-top:20px;">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne" style="background-color:coral">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        @item.Polls.PollName
+                        @*@Html.DisplayFor(modelItem => item.PollName)*@
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    @*<div style="width: 40%; float:left">
+            Total Votes<br /><br />
+            Winner's name<br /><br />
+            Winner's Votes<br /><br />
+
+        </div>*@
+                    <table style="width:40%" height="50%">
+                        <tr>
+                            <th>Total Votes</th>
+                            @{
+                                voteCount = 0;
+                                for (int i = 0; i < item.Option.ToList().Count(); i++)
+                                {
+                                    voteCount += item.Option.ToList().ElementAt(i).Count;
+                                }
+                            }
+                            <td>@voteCount</td>
+                        </tr>
+                        <tr>
+                            <th>Winner Name</th>
+                            @{
+                                winnerName = string.Empty;
+                                candidateId = 0;
+                                winnerVotes = 0;
+                                for (int i = 0; i < item.Option.ToList().Count(); i++)
+                                {
+                                    if (item.Option.ToList().ElementAt(i).Count > winnerVotes)
+                                    {
+                                        candidateId = item.Option.ToList().ElementAt(i).CandidateId;
+                                        winnerVotes = item.Option.ToList().ElementAt(i).Count;
+                                    }
+                                }
+                                winnerName = item.Candidates.ToList().Where(o => o.CandidateId == candidateId).FirstOrDefault().Name;
+                            }
+                            <td>@winnerName</td>
+                        </tr>
+                        <tr>
+                            <th>Winner Votes</th>
+                            <td>@winnerVotes</td>
+                        </tr>
+                    </table>
+
+                    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                    <div id="piechart" style="width: 60%; float:right"></div>
+                    <button onclick="initialize()">Draw Chart</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<script type="text/javascript">
+        
+    function drawPieChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Candidate', 'VoteCount'],
+            ['Candidate 1', 25],
+            ['Candidate 2', 25],
+            ['Candidate 3', 25],
+            ['Candidate 4', 25]
+        ]);
+
+        var options = {
+            title: 'Poll Results',
+            width: 900,
+            height: 500,
+            colors: ['#4060A5', '1EC7FE', '#e64522', '#0097BD', '#3a5876', '#cb2027'],
+            is3D: true
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+    }
+
+    google.load("visualization", "1", { packages: ["corechart"] });
+    // google.setOnLoadCallback(initialize);
+
+    function initialize() {
+        drawPieChart();
+    }
+</script>
+
+

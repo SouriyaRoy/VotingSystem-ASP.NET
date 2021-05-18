@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "votingSystem", "votingSystem\votingSystem.csproj", "{9A9B6B45-28D0-4749-A14C-B1957EDFEE04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voting", "voting\voting.csproj", "{878C6079-591B-4B94-9107-A8693CDC954B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingTest", "VotingTest\VotingTest.csproj", "{A7CC839B-F520-4918-BE0B-9DC8ACD734D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A9B6B45-28D0-4749-A14C-B1957EDFEE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A9B6B45-28D0-4749-A14C-B1957EDFEE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A9B6B45-28D0-4749-A14C-B1957EDFEE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A9B6B45-28D0-4749-A14C-B1957EDFEE04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{878C6079-591B-4B94-9107-A8693CDC954B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{878C6079-591B-4B94-9107-A8693CDC954B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{878C6079-591B-4B94-9107-A8693CDC954B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{878C6079-591B-4B94-9107-A8693CDC954B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CC839B-F520-4918-BE0B-9DC8ACD734D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CC839B-F520-4918-BE0B-9DC8ACD734D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CC839B-F520-4918-BE0B-9DC8ACD734D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CC839B-F520-4918-BE0B-9DC8ACD734D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {840D4738-613D-4E52-A747-F5D66CE16145}
+	EndGlobalSection
+EndGlobal

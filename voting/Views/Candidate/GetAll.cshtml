@@ -1,0 +1,87 @@
+﻿@model IEnumerable<voting.Models.Candidate>
+
+@{
+    ViewBag.Title = "GetAll";
+}
+
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+    <script>
+        function change(var x) {
+            return x.split(' ')[0];
+        }
+    </script>
+</head>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Home", "AdminHome", "Start", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Polls", "Index", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Candidates", "Index", "Candidate", new { area = "" }, new { @class = "navbar-brand" })
+             
+            </div>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav" style="list-style:none">
+                    <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div style=" margin-bottom: 2%; margin-top: 20px; ">
+        @Html.ActionLink("Add New Candidate", "Create", new { }, new { @class = "btn btn-primary" })
+    </div>
+
+
+    <div style="width: auto; text-align: center; margin: auto; margin-bottom:20px;">
+        <h3 style=""><b>Candidate List</b></h3>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead style="width:auto;">
+                <tr style="background-color: crimson; color:white;">
+                   
+                    <th style="width:300px">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DOB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Poll.PollName)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="width:auto;">
+                @foreach (var item in Model)
+                {
+                <tr>
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DOB)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Poll.PollName)
+                    </td>
+                    <td style="text-align:center; margin-left:25px;">
+
+                        @Html.ActionLink("  Edit  ", "Edit", new { id = item.CandidateId }, new { @class = "btn btn-primary", @style = "width:80px;" })
+
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CandidateId }, new { @class = "btn btn-primary", @style = "width:80px;" })
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>

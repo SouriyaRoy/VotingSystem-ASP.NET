@@ -1,0 +1,87 @@
+﻿@model voting.Models.Poll
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+</head>
+<div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("Home", "AdminHome", "Start", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Polls", "Index", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Candidates", "Index", "Candidate", new { area = "" }, new { @class = "navbar-brand" })
+           
+
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav" style="list-style:none">
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="padding:10px; background-color:crimson; color:white; text-align:center; margin-top:20px;">
+    <h4>Create New Poll</h4>
+</div>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div style="width: auto; text-align: center; margin: auto; margin-top:40px;">
+            @*<div class="form-group" style="margin-left: 25%; margin-top:0%;">
+                    @Html.LabelFor(model => model.PollStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-1" style="text-align: center;">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.PollStatus)
+                            @Html.ValidationMessageFor(model => model.PollStatus, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="form-group" style="margin-left: 25%; margin-top:0%;">
+                @Html.LabelFor(model => model.PollName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PollName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PollName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group" style="margin-left: 25%; margin-top:0%;">
+                    @Html.LabelFor(model => model.Result, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Result, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Result, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+
+            <div class="form-group" style="margin-top:30px;">
+                <div class="width: auto; text-align: center; margin: auto;">
+                    <input type="submit" value="Create" class="btn btn-primary" style="width:100px;" />
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+}
+
+<div style="width: auto; text-align: center; margin: auto;">
+    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

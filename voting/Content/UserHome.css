@@ -1,0 +1,6 @@
+﻿button.ghost {
+    background-color: transparent;
+    border-color: #FFFFFF;
+    position: absolute;
+    top: 25%;
+}

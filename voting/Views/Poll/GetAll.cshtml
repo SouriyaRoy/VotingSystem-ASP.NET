@@ -1,0 +1,133 @@
+﻿@model IEnumerable<voting.Models.Poll>
+
+@{
+    ViewBag.Title = "GetAll";
+}
+
+<head>
+    @Styles.Render("~/Content/AdminHome.css")
+</head>
+<div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("Home", "AdminHome", "Start", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Polls", "Index", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Candidates", "Index", "Candidate", new { area = "" }, new { @class = "navbar-brand" })
+          
+
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav" style="list-style:none">
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<div style=" margin-bottom: 2%; margin-top: 20px; ">
+    @Html.ActionLink("Create New Poll", "Create", new { }, new { @class = "btn btn-primary" })
+</div>
+
+<div style="width: auto; text-align: center; margin: auto; margin-bottom:20px;">
+    <h3 style=""><b>Ongoing Polls</b></h3>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead style="width:auto;">
+            <tr style="background-color: crimson; color:white;">
+                @*<th style="width:100px">
+                        Poll  Status
+                    </th>*@
+                <th style="width:150px">
+                    @Html.DisplayNameFor(model => model.PollId)
+                </th>
+
+                <th style="width:300px">
+                    @Html.DisplayNameFor(model => model.PollName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="width:auto;">
+            @foreach (var item in Model)
+            {
+                if (item.PollStatus == false)
+                {
+            <tr>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.PollStatus)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.PollId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PollName)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Result)
+        </td>*@
+            <td style="text-align:center; align-content:end; text-align:right; padding-right:93px;">
+
+                @Html.ActionLink("Manage", "Details", new { id = item.PollId }, new { @class = "btn btn-primary" })
+
+
+            </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+
+</div>
+
+<div style="width: auto; text-align: center; margin: auto; margin-bottom:20px;">
+    <h3 style=""><b>Closed Polls</b></h3>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead style="width:auto;">
+            <tr style="background-color: crimson; color:white;">
+
+                <th style="width:150px">
+                    @Html.DisplayNameFor(model => model.PollId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PollName)
+                </th>
+                @*<th>
+                    Poll Result
+                </th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="width:500px;">
+            @foreach (var item in Model)
+            {
+                if (item.PollStatus == true)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PollId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PollName)
+                        </td>
+
+                        <td style="text-align:right; padding-right:93px;">
+
+                            @Html.ActionLink("Result", "GetResultForParticularPoll", "Poll", new { pollId = item.PollId }, new { @class = "btn btn-primary" })
+
+                            @Html.ActionLink("Details", "Details", new { id = item.PollId }, new { @class = "btn btn-primary" })
+
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

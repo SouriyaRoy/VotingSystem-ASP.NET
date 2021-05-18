@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PollingSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Candidate">
+    <Key>
+      <PropertyRef Name="CandidateId" />
+    </Key>
+    <Property Name="CandidateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="DOB" Type="date" Nullable="false" />
+    <Property Name="PollId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="OptionId" />
+    </Key>
+    <Property Name="OptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PollId" Type="int" Nullable="false" />
+    <Property Name="CandidateId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Poll">
+    <Key>
+      <PropertyRef Name="PollId" />
+    </Key>
+    <Property Name="PollId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PollStatus" Type="bit" Nullable="false" />
+    <Property Name="PollName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Result" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="AadharNumber" Type="char" MaxLength="12" Nullable="false" />
+    <Property Name="UserType" Type="tinyint" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserHistory">
+    <Key>
+      <PropertyRef Name="UserHistoryId" />
+    </Key>
+    <Property Name="UserHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="PollId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CandidateId_Ref_Candidate">
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="1" />
+    <End Role="Option" Type="Self.Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Candidate">
+        <PropertyRef Name="CandidateId" />
+      </Principal>
+      <Dependent Role="Option">
+        <PropertyRef Name="CandidateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PollId_Ref_Poll">
+    <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Poll">
+        <PropertyRef Name="PollId" />
+      </Principal>
+      <Dependent Role="Candidate">
+        <PropertyRef Name="PollId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PollId_Ref_Poll_Option">
+    <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+    <End Role="Option" Type="Self.Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Poll">
+        <PropertyRef Name="PollId" />
+      </Principal>
+      <Dependent Role="Option">
+        <PropertyRef Name="PollId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PollingSystemModelStoreContainer">
+    <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Option" EntityType="Self.Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Poll" EntityType="Self.Poll" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserHistory" EntityType="Self.UserHistory" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="CandidateId_Ref_Candidate" Association="Self.CandidateId_Ref_Candidate">
+      <End Role="Candidate" EntitySet="Candidate" />
+      <End Role="Option" EntitySet="Option" />
+    </AssociationSet>
+    <AssociationSet Name="PollId_Ref_Poll" Association="Self.PollId_Ref_Poll">
+      <End Role="Poll" EntitySet="Poll" />
+      <End Role="Candidate" EntitySet="Candidate" />
+    </AssociationSet>
+    <AssociationSet Name="PollId_Ref_Poll_Option" Association="Self.PollId_Ref_Poll_Option">
+      <End Role="Poll" EntitySet="Poll" />
+      <End Role="Option" EntitySet="Option" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

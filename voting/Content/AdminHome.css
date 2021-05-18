@@ -1,0 +1,88 @@
+﻿body {
+}
+.poll_table {
+    text-decoration: none;
+    color: black;
+}
+
+.ov-container {
+    position: absolute;
+    top: -10%;
+    left: 25%;
+    width: 50%;
+    transition: transform 0.6s ease-in-out;
+}
+
+body {
+    background-image: url('VotingBackGround.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    font-family: BreeSerif;
+    font-weight: 600;
+    font-size: large;
+}
+
+.LogRegBody {
+    background-image: url('LogRegBack.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    font-family: BreeSerif;
+    font-weight: 600;
+    font-size: large;
+}
+
+.customnav {
+    color:white;
+    padding:20px;
+    text-decoration:none;
+}
+
+.buttonWidth {
+    width:100px;
+}
+
+/*.navbar-custom {
+    display: inline-block;
+    padding-top: $navbar-brand-padding-y;
+    padding-bottom: $navbar-brand-padding-y;
+    margin-right: $navbar-padding-x;
+    font-size: $navbar-brand-font-size;
+    line-height: inherit;
+    white-space: nowrap;
+    color: $navbar-dark-active-color;
+
+    include hover-focus {
+        text-decoration: none;
+        color: white;
+    }
+}*/
+
+@font-face {
+    font-family: BreeSerif;
+    src: url(BreeSerif-Regular.ttf);
+}
+
+/*.btn-grad {
+    background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%)
+}
+
+.btn-grad {
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+    .btn-grad:hover {
+        background-position: right center;*/ /* change the direction of the change here */
+        /*color: #fff;
+        text-decoration: none;
+    }*/
